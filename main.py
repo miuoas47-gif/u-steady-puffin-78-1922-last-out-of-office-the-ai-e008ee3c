@@ -18,7 +18,19 @@ LINE = (
 )
 
 
+MAX_CHARS = 280
+
+
+def check_line(line):
+    """Entry gate: the reply must be exactly one line within the cap."""
+    if not line or "\n" in line or "\r" in line:
+        raise SystemExit("entry gate: line must be a single non-empty line")
+    if len(line) > MAX_CHARS:
+        raise SystemExit(f"entry gate: line is {len(line)} chars, over {MAX_CHARS}")
+
+
 def main():
+    check_line(LINE)
     data = (LINE + "\n").encode("utf-8")
     sys.stdout.buffer.write(data)
     sys.stdout.buffer.flush()
